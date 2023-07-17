@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
 </head>
 
 <body>
@@ -25,10 +26,57 @@
             </div>	
         </div>	
         <div class="buttons">	
-            <button>Load User Data</button>	
-            <button>Display User</button>	
+            <button id="btn-generate" onclick="generateUser()">Generate User</button>
+            <button id="btn-save" onclick="saveUser()">Save User Data</button>	
+            <button id="btn-load" onclick="loadUser()">Load User Data</button>	
+            <div>
+                <label for="users">Saved users</label>
+                <select name="users" id="users"></select>
+            </div>
         </div>	
     </div>
+
+    <script id="quote-template" type="text/x-handlebars-template">
+        <h4>Favorite Quote:</h4>
+        <p>"{{quote}}"</p>
+        <p>- {{author}}.</p>
+    </script>
+
+    <script id="about-template" type="text/x-handlebars-template">
+        <h4>About me:</h4>
+        <div class="meat-text">"{{about}}"</div>
+    </script>
+
+    <script id="user-template" type="text/x-handlebars-template">
+        <img id="profile-pic" src={{img}}>
+        <div class="user-info">
+            <p>{{name}} {{lastName}}</p>
+            <p>{{city}}, {{state}}</p>
+        </div>
+    </script>
+
+    <script id="friends-template" type="text/x-handlebars-template">
+        <ul id="friends-list">
+            {{#each friends}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <script id="pokemon-template" type="text/x-handlebars-template">
+        <img id="pokemon-image" src={{img}}>
+        <p id="pokemon-text">Favorite pokemon: {{#properCase}}{{name}}{{/properCase}}</p>
+    </script>
+
+    <script id="users-template" type="text/x-handlebars-template">
+        {{#each savedUsers}}
+        <option value="{{id}}">{{name}} {{lastName}}</option>
+        {{/each}}
+    </script>
+
+    <script src="APIManager.js"></script>
+    <script src="Renderer.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

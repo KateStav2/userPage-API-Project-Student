@@ -52,7 +52,7 @@ body {
     font-family: 'Indie Flower', cursive;
 }
 
-.quote-container>p {
+.quote-container>h4 {
     font-family: 'Nunito', sans-serif;
     font-size: 1vmax;
 }
@@ -101,8 +101,8 @@ button {
 }
 
 #pokemon-image {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     display: inline-block;
     background-size: 100%;
     justify-self: center;
