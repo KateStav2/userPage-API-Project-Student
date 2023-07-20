@@ -1,9 +1,9 @@
 //This is the class that will manage all your APIs
 
 class APIManager {
-    //constructor() {
-    //    this.data = {}
-    //}
+    constructor() {
+        this.data = {}
+    }
     // methods
     initialise () {
         let users, quote, pokemon, about;
@@ -27,8 +27,18 @@ class APIManager {
             //     console.log(res);
             // })
         
+
+        // console.log(pokemonFeature);
+
+        //let gif = $.get(`http://api.giphy.com/v1/gifs/search?q=${pokemonFeature}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (result) => result)
+        
         //console.log(users);
         
         return Promise.all([users, quote, pokemon, about]);
+    }
+
+    receiveGif(searchText){
+        let gif = $.get(`http://api.giphy.com/v1/gifs/search?q=${searchText}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (result) => result)
+        return gif;
     }
 }

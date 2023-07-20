@@ -1,3 +1,4 @@
+
 class Renderer {
     
     constructor() {
@@ -38,25 +39,37 @@ class Renderer {
                 let gifUrl;
 
                 const getGif = async function (searchTest) {
-                    let res = await $.get(`http://api.giphy.com/v1/gifs/search?q=${pokemonFeature}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (r) => r)
-                    let rnd = Math.floor(Math.random()*res.data.length)
-                    return res.data[rnd].embed_url
-                    //return url;
+                    const result = await $.get(`http://api.giphy.com/v1/gifs/search?q=${pokemonFeature}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (result) => result)
+                    let rnd = Math.floor(Math.random()*result.data.length)
+                    let url = `${result.data[rnd].embed_url}`
+                    return url;
                 }
-                
-                async function fetchGif() {
+
+                const fetchGif = async () => {
                     try {
-                      
                         gifUrl = await getGif(pokemonFeature);
                         console.log(gifUrl);
-                        } catch (error) {
-                        //console.error('Error:', error);
-                        }
+    
+                        let userObject = {
+                            userInfo: userInfo,
+                            friends: friends,
+                            favoritePokemon: pokemonInfo,
+                            gifUrl: gifUrl
+                        };
+    
+                
+                        this.updatePage(userObject);
+                
+                        // ... (rest of your code)
+                    } catch (error) {
+                        console.error('Error:', error);
                     }
+                }
+                
                   
                 fetchGif();
 
-                //console.log('Global GIF URL:', gifUrl);
+                console.log('Global GIF URL:', gifUrl);
 
                 //console.log(getUrl)
 
@@ -74,22 +87,12 @@ class Renderer {
                 // })
 
 
-                let userObject = {
-                    userInfo: userInfo,
-                    friends: friends,
-                    favoritePokemon: pokemonInfo,
-                }    
 
-                this.updatePage(userObject);
-
-
-                // save current user info to local storage
-                let userObjectString = JSON.stringify(userObject);
-                localStorage.setItem('currentUser',userObjectString);
             })
             //.catch ((error) => console.log(error)) 
     }
-updatePage = function (userObject) {
+
+    updatePage = function (userObject) {
 
         $(".user-container").empty();
         $(".quote-container").empty();
@@ -97,7 +100,11 @@ updatePage = function (userObject) {
         $(".meat-container").empty();
         //$("#friends-list").empty();
         $(".friends-container").empty();
+        $("#frame").attr("src","")
         
+        //console.log(userObject.gifUrl)
+
+        $("#frame").attr("src",userObject.gifUrl)
         //const userObject = await this.getUserObject(promiseDate);
         // render "Quote" section
         const sourceQuote = $("#quote-template").html();
@@ -143,3 +150,4 @@ updatePage = function (userObject) {
 
         };
     };
+    
