@@ -59,7 +59,11 @@ class Renderer {
     
                 
                         this.updatePage(userObject);
-                
+                        
+                        // save current user info to local storage
+                        let userObjectString = JSON.stringify(userObject);
+                        localStorage.setItem('currentUser',userObjectString);
+
                         // ... (rest of your code)
                     } catch (error) {
                         console.error('Error:', error);
