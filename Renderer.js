@@ -1,11 +1,10 @@
-
 class Renderer {
     
     constructor() {
         //this.data 
     }
     
-    render = function (promiseDate) {
+    render = async function (promiseDate) {
         promiseDate
             .then ((result) => {
                 let [users, quote, pokemon, about] = result;
@@ -32,12 +31,54 @@ class Renderer {
                     name: pokemon.name,
                     img: pokemon.sprites.default
                 }
+                
+                let pokemonFeature = pokemon.category.name;
+                console.log(pokemonFeature);
+
+                let gifUrl;
+
+                const getGif = async function (searchTest) {
+                    let res = await $.get(`http://api.giphy.com/v1/gifs/search?q=${pokemonFeature}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (r) => r)
+                    let rnd = Math.floor(Math.random()*res.data.length)
+                    return res.data[rnd].embed_url
+                    //return url;
+                }
+                
+                async function fetchGif() {
+                    try {
+                      
+                        gifUrl = await getGif(pokemonFeature);
+                        console.log(gifUrl);
+                        } catch (error) {
+                        //console.error('Error:', error);
+                        }
+                    }
+                  
+                fetchGif();
+
+                //console.log('Global GIF URL:', gifUrl);
+
+                //console.log(getUrl)
+
+                // let rnd = Math.floor(Math.random()*gif.data.length)
+
+                // let gif = pokemon
+                // .then((result) => {
+                //     pokemonFeature = result.result.attributes[0].name;
+                //     return $.get(`http://api.giphy.com/v1/gifs/search?q=${pokemonFeature}&api_key=94E3Q6FGin3bKCRYNN090N0BaYQuHpcX&limit=1$rating=r`, (result) => result)
+                // })
+                // .then((gifResult) => {
+                //     console.log(gifResult);
+                //     return girResult
+
+                // })
+
 
                 let userObject = {
                     userInfo: userInfo,
                     friends: friends,
                     favoritePokemon: pokemonInfo,
-                }
+                }    
 
                 this.updatePage(userObject);
 
@@ -46,10 +87,9 @@ class Renderer {
                 let userObjectString = JSON.stringify(userObject);
                 localStorage.setItem('currentUser',userObjectString);
             })
-            .catch ((error) => console.log(error)) 
+            //.catch ((error) => console.log(error)) 
     }
-
-    updatePage = function (userObject) {
+updatePage = function (userObject) {
 
         $(".user-container").empty();
         $(".quote-container").empty();
@@ -103,4 +143,3 @@ class Renderer {
 
         };
     };
-    

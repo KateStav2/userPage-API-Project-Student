@@ -1,9 +1,9 @@
 //This is the class that will manage all your APIs
 
 class APIManager {
-    constructor() {
-        this.data = {}
-    }
+    //constructor() {
+    //    this.data = {}
+    //}
     // methods
     initialise () {
         let users, quote, pokemon, about;
